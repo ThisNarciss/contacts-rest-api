@@ -37,7 +37,7 @@ const updateFavoriteValid = (body) => {
   const bodyLength = Object.keys(body).length;
   const { error } = updateFavoriteSchema.validate(body);
   if (error || !bodyLength) {
-    const message = error ? error.message : "missing fields";
+    const message = error ? error.message : "missing field favorite";
     throw HttpError(400, message);
   }
 };

@@ -72,7 +72,7 @@ const update = async (req, res) => {
 
 const updateFavorite = async (req, res) => {
   updateFavoriteValid(req.body);
-  const result = await service.updateFavoriteStatus(
+  const result = await service.updateStatusContact(
     req.params.contactId,
     req.body
   );
