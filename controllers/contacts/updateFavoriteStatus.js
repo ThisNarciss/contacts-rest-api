@@ -1,10 +1,10 @@
-const { service } = require("../../models");
+const { contactsService } = require("../../models");
 
 const { HttpError, updateFavoriteValid } = require("../../utils");
 
 const updateFavorite = async (req, res) => {
   updateFavoriteValid(req.body);
-  const result = await service.updateStatusContact(
+  const result = await contactsService.updateStatusContact(
     req.params.contactId,
     req.body
   );

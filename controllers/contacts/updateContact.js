@@ -1,10 +1,13 @@
-const { service } = require("../../models");
+const { contactsService } = require("../../models");
 
 const { HttpError, updateContactValid } = require("../../utils");
 
 const update = async (req, res) => {
   updateContactValid(req.body);
-  const result = await service.updateContact(req.params.contactId, req.body);
+  const result = await contactsService.updateContact(
+    req.params.contactId,
+    req.body
+  );
   if (!result) {
     throw HttpError(404, "Not found");
   }

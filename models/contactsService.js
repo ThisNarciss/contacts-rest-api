@@ -2,7 +2,7 @@ const Contact = require("./contact");
 
 const getContacts = async () => {
   try {
-    const data = await Contact.find();
+    const data = await Contact.find({}, "-createdAt -updatedAt");
     return data;
   } catch (error) {
     return error;
@@ -11,7 +11,7 @@ const getContacts = async () => {
 
 const getContactById = async (id) => {
   try {
-    const contact = await Contact.findById(id);
+    const contact = await Contact.findById(id, "-createdAt -updatedAt");
     return contact;
   } catch (error) {
     return error;

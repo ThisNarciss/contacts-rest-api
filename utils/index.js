@@ -3,6 +3,8 @@ const {
   addContactValid,
   updateContactValid,
   updateFavoriteValid,
+  logValid,
+  regValid,
 } = require("./validations");
 const ctrlWrapper = require("./ctrlWrapper");
 const handleMongooseError = require("./handleMongooseError");
@@ -14,4 +16,6 @@ module.exports = {
   ctrlWrapper,
   handleMongooseError,
   updateFavoriteValid,
+  logValid,
+  regValid,
 };

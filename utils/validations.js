@@ -17,6 +17,31 @@ const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
+const registrationSchema = Joi.object({
+  name: Joi.string().min(2).max(50).required(),
+  email: Joi.string().required(),
+  password: Joi.string().min(6).required(),
+});
+
+const loginSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().min(6).required(),
+});
+
+const regValid = (body) => {
+  const { error } = registrationSchema.validate(body);
+  if (error) {
+    throw HttpError(400, "missing required name field");
+  }
+};
+
+const logValid = (body) => {
+  const { error } = loginSchema.validate(body);
+  if (error) {
+    throw HttpError(400, "missing required name field");
+  }
+};
+
 const addContactValid = (body) => {
   const { error } = addContactSchema.validate(body);
   if (error) {
@@ -43,6 +68,8 @@ const updateFavoriteValid = (body) => {
 };
 
 module.exports = {
+  regValid,
+  logValid,
   addContactValid,
   updateContactValid,
   updateFavoriteValid,
