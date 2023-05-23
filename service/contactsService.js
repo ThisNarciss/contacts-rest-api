@@ -1,9 +1,21 @@
-const Contact = require("./contact");
+const { Contact } = require("../models");
 
-const getContacts = async () => {
+const getContacts = async (owner, query) => {
   try {
-    const data = await Contact.find({}, "-createdAt -updatedAt");
-    return data;
+    const { page = 1, limit = 20, favorite = null } = query;
+    const skip = (page - 1) * limit;
+    const data = await Contact.find({ owner }, "-createdAt -updatedAt", {
+      skip,
+      limit,
+    });
+
+    if (favorite === null) {
+      return data;
+    } else if (JSON.parse(favorite)) {
+      return data.filter((item) => item.favorite === true);
+    } else if (!JSON.parse(favorite)) {
+      return data.filter((item) => item.favorite === false);
+    }
   } catch (error) {
     return error;
   }

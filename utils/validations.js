@@ -17,28 +17,26 @@ const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
-const registrationSchema = Joi.object({
-  name: Joi.string().min(2).max(50).required(),
+const authSchema = Joi.object({
   email: Joi.string().required(),
   password: Joi.string().min(6).required(),
 });
 
-const loginSchema = Joi.object({
-  email: Joi.string().required(),
-  password: Joi.string().min(6).required(),
+const subSchema = Joi.object({
+  subscription: Joi.string().required(),
 });
 
-const regValid = (body) => {
-  const { error } = registrationSchema.validate(body);
+const subValid = (body) => {
+  const { error } = subSchema.validate(body);
   if (error) {
-    throw HttpError(400, "missing required name field");
+    throw HttpError(400, error.message);
   }
 };
 
-const logValid = (body) => {
-  const { error } = loginSchema.validate(body);
+const authValid = (body) => {
+  const { error } = authSchema.validate(body);
   if (error) {
-    throw HttpError(400, "missing required name field");
+    throw HttpError(400, error.message);
   }
 };
 
@@ -68,9 +66,9 @@ const updateFavoriteValid = (body) => {
 };
 
 module.exports = {
-  regValid,
-  logValid,
+  authValid,
   addContactValid,
   updateContactValid,
   updateFavoriteValid,
+  subValid,
 };

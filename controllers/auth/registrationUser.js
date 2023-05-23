@@ -1,21 +1,26 @@
-const { regValid, HttpError } = require("../../utils");
-const { usersService } = require("../../models");
+const bcrypt = require("bcrypt");
+const { authValid, HttpError } = require("../../utils");
+const { usersService } = require("../../service");
 
-const registration = async (req, res, next) => {
-  regValid(req.body);
-  console.log(req.body);
-  const { email, password, name } = req.body;
+const registration = async (req, res) => {
+  authValid(req.body);
+  const { email, password } = req.body;
   const user = await usersService.findUser(email);
-  console.log(user);
   if (user) {
     throw HttpError(409, "Email in use");
   }
-  const newUser = await usersService.regUser(req.body);
+  const hashPassword = await bcrypt.hash(password, 10);
+  const newUser = await usersService.regUser({ email, password: hashPassword });
+  if (newUser.status === 400) {
+    throw HttpError(400, newUser.message);
+  }
 
   res.status(201).json({
     status: "success",
     code: 201,
-    data: newUser,
+    data: {
+      user: { email: newUser.email, subscription: newUser.subscription },
+    },
   });
 };
 

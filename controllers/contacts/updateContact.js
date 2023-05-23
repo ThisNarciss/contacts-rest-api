@@ -1,4 +1,4 @@
-const { contactsService } = require("../../models");
+const { contactsService } = require("../../service");
 
 const { HttpError, updateContactValid } = require("../../utils");
 
