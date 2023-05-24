@@ -1,9 +1,9 @@
-const { service } = require("../../models");
+const { contactsService } = require("../../service");
 
 const { HttpError } = require("../../utils");
 
 const getById = async (req, res) => {
-  const result = await service.getContactById(req.params.contactId);
+  const result = await contactsService.getContactById(req.params.contactId);
   if (result) {
     res.json({
       status: "success",

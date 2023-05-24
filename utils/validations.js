@@ -17,6 +17,29 @@ const updateFavoriteSchema = Joi.object({
   favorite: Joi.boolean().required(),
 });
 
+const authSchema = Joi.object({
+  email: Joi.string().required(),
+  password: Joi.string().min(6).required(),
+});
+
+const subSchema = Joi.object({
+  subscription: Joi.string().required(),
+});
+
+const subValid = (body) => {
+  const { error } = subSchema.validate(body);
+  if (error) {
+    throw HttpError(400, error.message);
+  }
+};
+
+const authValid = (body) => {
+  const { error } = authSchema.validate(body);
+  if (error) {
+    throw HttpError(400, error.message);
+  }
+};
+
 const addContactValid = (body) => {
   const { error } = addContactSchema.validate(body);
   if (error) {
@@ -43,7 +66,9 @@ const updateFavoriteValid = (body) => {
 };
 
 module.exports = {
+  authValid,
   addContactValid,
   updateContactValid,
   updateFavoriteValid,
+  subValid,
 };
