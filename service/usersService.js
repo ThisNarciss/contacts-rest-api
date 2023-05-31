@@ -51,10 +51,24 @@ const updateSubscription = async (id, subscription) => {
   }
 };
 
+const updateAvatar = async (id, avatarUrl) => {
+  try {
+    const result = await User.findByIdAndUpdate(
+      id,
+      { avatarUrl },
+      { new: true }
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   logUser,
   regUser,
   findUser,
   updateToken,
   updateSubscription,
+  updateAvatar,
 };
