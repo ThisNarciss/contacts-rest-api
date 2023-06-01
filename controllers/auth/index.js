@@ -3,6 +3,7 @@ const registration = require("./registrationUser");
 const getCurrent = require("./getCurrentUser");
 const logout = require("./logoutUser");
 const updateSub = require("./updateSub");
+const updateUserAvatar = require("./updateUserAvatar");
 
 const { ctrlWrapper } = require("../../utils");
 
@@ -12,4 +13,5 @@ module.exports = {
   getCurrent: ctrlWrapper(getCurrent),
   logout: ctrlWrapper(logout),
   updateSub: ctrlWrapper(updateSub),
+  updateUserAvatar: ctrlWrapper(updateUserAvatar),
 };

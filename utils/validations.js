@@ -26,6 +26,10 @@ const subSchema = Joi.object({
   subscription: Joi.string().required(),
 });
 
+const avatarSchema = Joi.object({
+  // avatarUrl: Joi.
+});
+
 const subValid = (body) => {
   const { error } = subSchema.validate(body);
   if (error) {
