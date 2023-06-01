@@ -6,14 +6,11 @@ const { HttpError } = require("../../utils");
 const avatarDir = path.join(process.cwd(), "public", "avatars");
 
 const updateUserAvatar = async (req, res) => {
-  const { path: tempPath, mimetype } = req.file;
+  const { path: tempPath, filename } = req.file;
   const { _id: id } = req.user;
-  const index = mimetype.indexOf("/");
-  const format = mimetype.slice(index + 1, mimetype.length);
-  const uniqAvatarName = `avatar-${id}.${format}`;
-  const resultUpload = path.join(avatarDir, uniqAvatarName);
+  const resultUpload = path.join(avatarDir, filename);
   await fs.rename(tempPath, resultUpload);
-  const avatarUrl = path.join("avatars", uniqAvatarName);
+  const avatarUrl = path.join("avatars", filename);
 
   const result = await usersService.updateAvatar(id, avatarUrl);
   res.json({

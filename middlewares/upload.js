@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const { getUniqAvatarName } = require("../utils");
 const tempDir = path.join(process.cwd(), "tmp");
 
 const multerConfig = multer.diskStorage({
@@ -7,7 +8,10 @@ const multerConfig = multer.diskStorage({
     cd(null, tempDir);
   },
   filename: (req, file, cd) => {
-    cd(null, file.originalname);
+    const { mimetype } = file;
+    const { _id: id } = req.user;
+    const uniqName = getUniqAvatarName(id, mimetype);
+    cd(null, uniqName);
   },
 });
 
