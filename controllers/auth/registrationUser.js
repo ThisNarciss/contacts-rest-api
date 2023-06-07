@@ -1,4 +1,6 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+const gravatar = require("gravatar");
+const { nanoid } = require("nanoid");
 const {
   authValid,
   HttpError,
@@ -6,8 +8,6 @@ const {
   getVerifyData,
 } = require("../../utils");
 const { usersService } = require("../../service");
-const gravatar = require("gravatar");
-const { nanoid } = require("nanoid");
 
 const registration = async (req, res) => {
   authValid(req.body);
