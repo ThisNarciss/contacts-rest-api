@@ -4,8 +4,8 @@ const getCurrent = require("./getCurrentUser");
 const logout = require("./logoutUser");
 const updateSub = require("./updateSub");
 const updateUserAvatar = require("./updateUserAvatar");
-const verifyUserEmail = require("./verifyUserEmail");
-const repeatedVerify = require("./repeatedVerify");
+const verifyUserEmail = require("../email/verifyUserEmail");
+const repeatedVerify = require("../email/repeatedVerify");
 const { ctrlWrapper } = require("../../utils");
 
 module.exports = {

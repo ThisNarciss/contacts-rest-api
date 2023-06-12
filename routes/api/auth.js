@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ctrl = require("../../controllers/auth");
+const ctrlEmail = require("../../controllers/email");
 const { authenticate, upload } = require("../../middlewares");
 
 router.post("/register", ctrl.registration);
@@ -14,7 +15,7 @@ router.patch(
   upload.single("avatar"),
   ctrl.updateUserAvatar
 );
-router.get("/verify/:verificationToken", ctrl.verifyUserEmail);
-router.post("/verify", ctrl.repeatedVerify);
+router.get("/verify/:verificationToken", ctrlEmail.verifyUserEmail);
+router.post("/verify", ctrlEmail.repeatedVerify);
 
 module.exports = router;
