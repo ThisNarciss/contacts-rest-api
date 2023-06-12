@@ -1,20 +1,37 @@
-const bcrypt = require("bcrypt");
-const { authValid, HttpError } = require("../../utils");
-const { usersService } = require("../../service");
+const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
+const { nanoid } = require("nanoid");
+const {
+  authValid,
+  HttpError,
+  sendEmail,
+  getVerifyData,
+} = require("../../utils");
+const { usersService } = require("../../service");
 
 const registration = async (req, res) => {
   authValid(req.body);
   const { email, password } = req.body;
   const user = await usersService.findUser(email);
-
   if (user) {
     throw HttpError(409, "Email in use");
   }
+  const verificationToken = nanoid();
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarUrl = gravatar.url(email);
-  const newBody = { email, password: hashPassword, avatarUrl };
-  const newUser = await usersService.regUser(newBody);
+  const newUserData = {
+    email,
+    password: hashPassword,
+    avatarUrl,
+    verificationToken,
+  };
+  const newUser = await usersService.regUser(newUserData);
+  const verifyEmail = getVerifyData({
+    email,
+    verificationToken,
+  });
+
+  await sendEmail(verifyEmail);
 
   if (newUser.status === 400) {
     throw HttpError(400, newUser.message);

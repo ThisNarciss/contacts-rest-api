@@ -26,9 +26,16 @@ const subSchema = Joi.object({
   subscription: Joi.string().required(),
 });
 
-const avatarSchema = Joi.object({
-  // avatarUrl: Joi.
+const repeatedVerifySchema = Joi.object({
+  email: Joi.string().required(),
 });
+
+const repeatedVerifyValid = (body) => {
+  const { error } = repeatedVerifySchema.validate(body);
+  if (error) {
+    throw HttpError(400, "missing required field email");
+  }
+};
 
 const subValid = (body) => {
   const { error } = subSchema.validate(body);
@@ -75,4 +82,5 @@ module.exports = {
   updateContactValid,
   updateFavoriteValid,
   subValid,
+  repeatedVerifyValid,
 };

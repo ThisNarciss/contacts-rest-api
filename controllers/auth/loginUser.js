@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { authValid, HttpError } = require("../../utils");
 const { usersService } = require("../../service");
@@ -11,6 +11,10 @@ const login = async (req, res) => {
   const user = await usersService.findUser(email);
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
+  }
+
+  if (!user.verify) {
+    throw HttpError(401, "Email not verify");
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
